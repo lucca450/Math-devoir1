@@ -9,3 +9,16 @@ C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes d
 C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.AssemblyInfo.cs
 C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.dll
 C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.pdb
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.exe
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.deps.json
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.runtimeconfig.json
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.runtimeconfig.dev.json
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.dll
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.pdb
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.csprojAssemblyReference.cache
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.AssemblyInfoInputs.cache
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.AssemblyInfo.cs
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.csproj.CoreCompileInputs.cache
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.dll
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.pdb
+H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.genruntimeconfig.cache

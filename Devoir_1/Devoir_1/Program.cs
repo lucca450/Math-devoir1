@@ -7,108 +7,117 @@ namespace Devoir_1
 {
     class Program
     {
+        static void CreateGrammar()
+        {
+            bool fileExists = true;
+            string path = "";
+            while (fileExists)
+            {
+                Console.WriteLine("Entrez le nom du fichier: ");
+                string fileName = Console.ReadLine().Trim();                        //  Lecture du nom du fichier
+
+                path = string.Format(@".\{0}.txt", fileName);                       //  Formatage du chemin du fichier
+
+                fileExists = File.Exists(path);                                     //  Vérification de l'existance du fichier
+
+                if (fileExists)
+                    Console.WriteLine("Une grammaire avec ce nom existe déjà.\n");
+            }
+
+            StreamWriter sw = new StreamWriter(path,true);                         //  Écrit à la suite du texte déjà présent.
+
+            bool validInput;
+            bool done = false;
+            while (!done)                                                           //  Tant que l'utilisateur n'a pas fini d'écrire de règle
+            {
+                Console.WriteLine("Entrer une règle à la grammaire");
+                string rule = Console.ReadLine().Trim();                                //  Lecture de la règle
+
+                sw.WriteLine(rule);                                                     //  Écriture de la règle dans le fichier
+
+                Console.WriteLine(string.Format("Règle ajoutée: {0}", rule));
+
+                validInput = false;
+                while (!validInput)                                                     //  Tant que l'utiliseur n'a pas de entrée de donnée valide
+                {
+                    validInput = true;
+
+                    Console.WriteLine("Voulez-vous ajouter une autre règle? o/n");
+                    string input = Console.ReadLine();                                      //  Entrée de l'utilisateur
+                    switch (input)
+                    {
+                        case "o":                                                           //  Si oui
+                            break;
+                        case "n":                                                           //  Si non
+                            done = true;
+                            break;
+                        default:                                                            //  Si entrée invalide
+                            Console.WriteLine("Entrée invalide");
+                            validInput = false;
+                            break;
+                    }
+                }
+            }
+
+            validInput = false;
+            while (!validInput)                                                         //  Tant que l'utiliseur n'a pas de entrée de donnée valide
+            {
+                validInput = true;
+
+                Console.WriteLine("Voulez-vous sauvegarder la grammaire? o/n");             //  Demande de sauvegarde de la grammaire
+                string input = Console.ReadLine();                                          //  Lecture de la réponse
+
+                switch (input)
+                {
+                    case "o":                                                               //  Si oui
+                        break;
+                    case "n":                                                               //  Si non
+                        sw.Close();
+                        File.Delete(path);
+                        break;
+                    default:                                                                //  Si entrée invalide
+                        Console.WriteLine("Entrée invalide");
+                        validInput = false;
+                        break;
+                }
+            }
+
+            sw.Close();
+        }
+        static void ImportGrammar()
+        {
+
+        }
+
         static void Main(string[] args)
         {
-            string fileName, fileText, userInput;
-             
+            bool invalidInput = true;
 
-            Console.Write("Entrez le contenu du fichier: ");
-            fileText = Console.ReadLine();
-
-            if (writeToFile(fileText))
+            while (invalidInput)                                                        //  Tant que l'utiliseur n'a pas de entrée de donnée valide
             {
-                Console.WriteLine("Enregistrement effectué.\nVoici ce que contient le fichier:");
-                readFromFile();
-            }
-            else
-            {
-                Console.WriteLine("L'enregistrement ne s'est pas effectué.");
-            }
+                Console.WriteLine("Choisissez parmis les fonctions suivantes :");       //  Menu de l'application
+                Console.WriteLine("1- Créer une nouvelle grammaire");
+                Console.WriteLine("2- Charger une grammaire existante");
+                Console.WriteLine("3- Quitter");
 
+                string input = Console.ReadLine();                                      //  Lecture de la réponse
 
-            Console.Write("Voulez-vous renommer le fichier? (o ou n)");
-            userInput = Console.ReadLine();
-            if (userInput.Trim() == "o" || userInput.Trim() == "O")
-            {
-                Console.Write("Entrez le nom du fichier: ");
-                fileName = Console.ReadLine();
-
-                if(fileName.Trim() != "")
+                switch(input)
                 {
-                    if (renameFile(@".\Grammaire.txt", @".\" + fileName + ".txt"))
-                    {
-                        Console.WriteLine("Le fichier a changé de nom.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Une erreur est survenue.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Une erreur est survenue.");
+                    case "1":                                                               // Si 1 : Création de la grammaire
+                        CreateGrammar();
+                        break;
+                    case "2":                                                               // Si 2 : Importation de la grammaire
+                        ImportGrammar();
+                        break;
+                    case "3":                                                               // Si 3 : Fermeture de l'application
+                        invalidInput = false;
+                        break;
+                    default:                                                                // Si entrée invalide
+                        Console.WriteLine("Entrée invalide");
+                        break;
                 }
             }
-            else if(userInput.Trim() == "n" || userInput.Trim() == "N")
-            {
-                Console.WriteLine("Fin du programme.");
-            }
-            else
-            {
-                Console.WriteLine("Entrée non valide.");
-            }
-
-            
-
         }
-
-        static bool writeToFile(string texte)
-        {
-          
-            var path = @".\Grammaire.txt";
-            
-
-            //StreamWriter sw = new StreamWriter(path);     // overright le texte dans le fichier.
-            StreamWriter sw = new StreamWriter(path, true); // écrit à la suite du texte déjà présent.
-
-
-            List<string> liste;
-
-            liste = texte.Split('/').ToList();
-
-            foreach (var item in liste)
-            {
-                if (item.Trim() != "")
-                {
-                    sw.WriteLine(item.Trim());
-                }
-            }
-            sw.Close();        
-            
-
-            return true;
-        }
-
-
-        static bool renameFile(string old, string recent)
-        {
-            if (File.Exists(old))
-            {
-                File.Copy(old, recent, true);
-                File.Delete(old);
-                return true;
-            }
-            return false;
-        }
-
-        static void readFromFile()
-        {
-
-            string readText = File.ReadAllText(@".\Grammaire.txt");
-           
-            Console.WriteLine("J'ai trouvé ceci: " + readText);
-
-        }
-
     }
 }
