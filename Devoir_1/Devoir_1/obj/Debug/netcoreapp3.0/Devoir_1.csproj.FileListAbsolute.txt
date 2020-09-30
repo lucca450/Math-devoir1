@@ -22,3 +22,14 @@ H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\
 H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.dll
 H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.pdb
 H:\Users\Vincent Bellemare\OneDrive - Université du Québec à Trois-Rivières\School\UNI\A-2020\Math\Devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.genruntimeconfig.cache
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.exe
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.deps.json
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.runtimeconfig.json
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.runtimeconfig.dev.json
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.dll
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\bin\Debug\netcoreapp3.0\Devoir_1.pdb
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.csprojAssemblyReference.cache
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.AssemblyInfoInputs.cache
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.AssemblyInfo.cs
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.dll
+C:\Users\lucca\OneDrive - Université du Québec à Trois-Rivières\UQTR\Notes de cours\SESSION 3\Mathématiques pour informaticiens II\devoir1\Devoir_1\Devoir_1\obj\Debug\netcoreapp3.0\Devoir_1.pdb
