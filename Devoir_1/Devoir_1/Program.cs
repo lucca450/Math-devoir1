@@ -91,7 +91,6 @@ namespace Devoir_1
                 {
                     sw.Write(rule);
                 }
-
             }
 
             sw.Close();
@@ -143,11 +142,23 @@ namespace Devoir_1
 
         static void Main(string[] args)
         {
+           
+
+            Console.WriteLine("\n\n\n\n Vérifier les règles importées \n\n\n");
+
+
+
+
+
+
             Grammar grammar = null;
 
-            bool invalidInput = true;
-            while (invalidInput)                                                        //  Tant que l'utiliseur n'a pas de entrée de donnée valide
+            bool invalidInput = true, done = false;
+            while (invalidInput || !done)                                                        //  Tant que l'utiliseur n'a pas de entrée de donnée valide
             {
+                //Console.Clear();
+
+                invalidInput = false;
                 if (grammar != null)
                 {
                     Console.WriteLine("Grammaire importée : " + grammar.fileName + "\n");
@@ -211,9 +222,10 @@ namespace Devoir_1
                         }
                         break;
                     case "4":                                                               // Si 4 : Fermeture de l'application
-                        invalidInput = false;
+                        done = true;
                         break;
                     default:                                                                // Si entrée invalide
+                        invalidInput = true;
                         Console.WriteLine("Entrée invalide");
                         break;
                 }
@@ -223,8 +235,8 @@ namespace Devoir_1
         private static Grammar VisualizeGrammar(Grammar grammar)
         {
             DisplayGrammar(grammar);
-            bool invalidInput = true;
-            while (invalidInput)                                                        //  Tant que l'utiliseur n'a pas de entrée de donnée valide
+            bool invalidInput = true, done = false;
+            while (invalidInput || !done)                                                        //  Tant que l'utiliseur n'a pas de entrée de donnée valide
             {
                 invalidInput = false;
                 Console.WriteLine("Choisissez parmis les fonctions suivantes :");       //  Menu principal de l'application
@@ -247,6 +259,7 @@ namespace Devoir_1
                         
                         break;
                     case "4":                                                               // Si 4 : Quitter
+                        done = true;
                         break;
                     default:
                         Console.WriteLine("Entrée invalide");
@@ -263,13 +276,45 @@ namespace Devoir_1
             foreach(string rule in grammar.rules)
             {
                 Console.WriteLine(string.Format("{0}- {1}", i, rule));
+                i++;
             }
+        }
+
+        private static int AskForRuleSelection(string keyword, int max)
+        {
+            int choice = -1;
+
+            bool invalidInput = true;
+            while (invalidInput)
+            {
+                invalidInput = false;
+
+                Console.WriteLine("Quelle regle voulez-vous " + keyword + "?");
+                string input = Console.ReadLine();
+
+                try
+                {
+                    choice = int.Parse(input);
+                    invalidInput = choice < 1 || choice > max;
+                    if (invalidInput)
+                    {
+                        Console.WriteLine("Vous devez entrer un entier entre 1 et " + max);
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Vous devez entrer un entier entre 1 et " + max);
+                    invalidInput = true;
+                }
+
+            }
+            return choice;
         }
 
         private static Grammar GrammarModification(Grammar grammar)
         {
-            bool invalidInput = true;
-            while (invalidInput)                                                        //  Tant que l'utiliseur n'a pas de entrée de donnée valide
+            bool invalidInput = true, done = false;
+            while (invalidInput || !done)                                                        //  Tant que l'utiliseur n'a pas de entrée de donnée valide
             {
                 invalidInput = false;
                 Console.WriteLine("Choisissez parmis les fonctions suivantes :");       //  Menu de l'application
@@ -279,14 +324,18 @@ namespace Devoir_1
                 Console.WriteLine("4- Quitter");
 
                 string input = Console.ReadLine();
-
+                int choice = -1;
                 switch (input)
                 {
                     case "1":                                                               // Si 1 : Modification d'une regle
                         DisplayGrammarWithOptions(grammar);
+                        choice = AskForRuleSelection("modifier", grammar.rules.Count);
+                        ModifyRule(choice, grammar);
                         break;
                     case "2":                                                               // Si 2 : Suppression d'une regle
                         DisplayGrammarWithOptions(grammar);
+                        choice = AskForRuleSelection("supprimer", grammar.rules.Count);
+
                         break;
                     case "3":                                                               // Si 3 : Ajout d'une ou plusieurs regles
                         List<string> addedRules = AskRules(true);
@@ -298,6 +347,7 @@ namespace Devoir_1
                         }
                         break;
                     case "4":                                                               // Si 4 : Quitter
+                        done = true;
                         break;
                     default:
                         Console.WriteLine("Entrée invalide");
@@ -307,6 +357,76 @@ namespace Devoir_1
             }
 
             return grammar;
+        }
+
+        private static bool ThereIsAnotherSRule(List<string> rules)
+        {
+            foreach(string rule in rules)
+            {
+                if (rule.Contains("S"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static void ModifyRule(int choice, Grammar grammar)
+        {
+            string newRule = AskRule(grammar.rules);
+            List<string> beforeRules = grammar.rules.ToList();
+
+            string beingReplacedRule = grammar.rules[choice - 1];
+            grammar.rules[choice - 1] = newRule;
+
+            if (newRule.Contains("S") || !beingReplacedRule.Contains("S") || ThereIsAnotherSRule(grammar.rules))
+            {
+                if (AskForConfirmation())
+                {
+                    WriteGrammarInFile(grammar.path, grammar.rules);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Vous ne pouvez pas retirer la seule règle S");
+                Console.WriteLine("Aucun changement");
+            }
+
+        }
+
+        private static List<string> RemoveRule(int choice, List<string> rules)
+        {
+            rules.RemoveAt(choice - 1);
+            return rules;
+        }
+        private static bool RuleDuplicate(string rule, List<string> rules)
+        {
+            return rules.Contains(rule);
+        }
+        private static string AskRule(List<string> rules)
+        {
+            string rule = "";
+
+            bool validRule = false;
+            while (!validRule)
+            {
+                Console.WriteLine("Entrez une règle à la grammaire. Respectez le format suivant: S->e OU X->1 OU X->1X");
+                rule = Console.ReadLine().Trim();
+
+                if (Regex.IsMatch(rule, "^(?:[A-Z]->[0-1]{1}[A-Z]{1}|[A-Z]->[0-1]{1}|S->e)"))
+                {
+                    if (!RuleDuplicate(rule, rules))
+                    {
+                        validRule = true;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("La règle n'est pas valide. Respectez le format suivant: S->e OU X->1 OU X->1X");
+                }
+            }
+
+            return rule;
         }
 
         private static bool AskForConfirmation()
@@ -339,59 +459,51 @@ namespace Devoir_1
             bool done = false;
             while (!done)                                                           //  Tant que l'utilisateur n'a pas fini d'écrire de règle
             {
-                Console.WriteLine("Entrez une règle à la grammaire. Respectez le format suivant: S->e OU X->1 OU X->1X");
-                string rule = Console.ReadLine().Trim();                                //  Lecture de la règle
+                string rule = AskRule(rules);
 
-                if (Regex.IsMatch(rule, "^(?:[A-Z]->[0-1]{1}[A-Z]{1}|[A-Z]->[0-1]{1}|S->e)"))
-                {
                 bool validInput;
-                    rules.Add(rule);                                                        //  Ajoute la règle dans la liste
+                rules.Add(rule);                                                        //  Ajoute la règle dans la liste
 
-                    Console.WriteLine(string.Format("Règle ajoutée: {0}", rule));
+                Console.WriteLine(string.Format("Règle ajoutée: {0}", rule));
 
-                    validInput = false;
-                    while (!validInput)                                                     //  Tant que l'utiliseur n'a pas de entrée de donnée valide
+                validInput = false;
+                while (!validInput)                                                     //  Tant que l'utiliseur n'a pas de entrée de donnée valide
+                {
+                    validInput = true;
+                    int foundSRule = 0;
+                    Console.WriteLine("Voulez-vous ajouter une autre règle? o/n");
+                    string input = Console.ReadLine();                                      //  Entrée de l'utilisateur
+
+                    switch (input)
                     {
-                        validInput = true;
-                        int foundSRule = 0;
-                        Console.WriteLine("Voulez-vous ajouter une autre règle? o/n");
-                        string input = Console.ReadLine();                                      //  Entrée de l'utilisateur
-
-                        switch (input)
-                        {
-                            case "o":                                                           //  Si oui
-                                break;
-                            case "n":                                                           //  Si non     
-                                if (!adding)
+                        case "o":                                                           //  Si oui
+                            break;
+                        case "n":                                                           //  Si non     
+                            if (!adding)
+                            {
+                                foreach (string r in rules)                                         //Cherche une règle S
                                 {
-                                    foreach (string r in rules)                                         //Cherche une règle S
+                                    if (r != "")
                                     {
-                                        if (r != "")
+                                        if (r.Substring(0, 1) == "S")
                                         {
-                                            if (r.Substring(0, 1) == "S")
-                                            {
-                                                foundSRule++;
-                                            }
+                                            foundSRule++;
                                         }
                                     }
-                                    done = foundSRule > 0;
                                 }
-                                else
-                                {
-                                    done = true;
-                                }
+                                done = foundSRule > 0;
+                            }
+                            else
+                            {
+                                done = true;
+                            }
 
-                                break;
-                            default:                                                            //  Si entrée invalide
-                                Console.WriteLine("Entrée invalide");
-                                validInput = false;
-                                break;
-                        }
+                            break;
+                        default:                                                            //  Si entrée invalide
+                            Console.WriteLine("Entrée invalide");
+                            validInput = false;
+                            break;
                     }
-                }
-                else
-                {
-                    Console.WriteLine("La règle n'est pas valide. Respectez le format suivant: S->e OU X->1 OU X->1X");
                 }
             }
             return rules;
