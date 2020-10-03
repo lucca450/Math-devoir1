@@ -173,7 +173,6 @@ namespace Devoir_1
             {
                 return true;
             }
-             
         }
 
         private static void DisplayGrammar(Grammar grammar)
