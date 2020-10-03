@@ -104,7 +104,7 @@ namespace Devoir_1
             return fileName;
         }
 
-        static Grammar ImportGrammar()
+        private static Grammar ImportGrammar()
         {
             bool fileExists = false;
             string fileName = "", path = "";
@@ -116,18 +116,64 @@ namespace Devoir_1
                 fileExists = FileExists(path);
 
                 if (!fileExists)
+                {
                     Console.WriteLine("Aucune grammaire n'a été trouvée");
+                }
+
             }
 
 
             StreamReader sr = new StreamReader(path);
 
             List<string> rules = sr.ReadToEnd().Split("\r\n").ToList<string>();
-            Grammar grammar = new Grammar(fileName, path, rules);
 
-            sr.Close();
+            int error = 0;
+            int sRuleCounter = 0;
+            foreach (var rule in rules)
+            {
+                if (rule.Contains("S"))
+                {
+                    sRuleCounter++;
+                }
+                if (!Regex.IsMatch(rule, "^(?:[A-Z]->[0-1]{1}[A-Z]{1}|[A-Z]->[0-1]{1}|S->e)") || ImportedGrammerDuplicate(rule, rules))
+                {
+                    error++;
+                }
+            }
 
-            return grammar;
+            if (error == 0 && sRuleCounter >= 1)
+            {
+                Grammar grammar = new Grammar(fileName, path, rules);
+                sr.Close();
+                return grammar;
+            }
+            else
+            {
+                Console.WriteLine("La grammaire n'a pas été importée. Vérifiez vos régles, car elles ne respectent pas le format demandé.");
+                sr.Close();
+                return null;
+            }
+        }
+
+        static bool ImportedGrammerDuplicate(string rule, List<string> rules)
+        {
+            int duplicateRule = 0;
+            foreach (var r in rules)
+            {
+                if (r == rule)
+                {
+                    duplicateRule++;
+                }
+            }
+            if (duplicateRule == 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+             
         }
 
         private static void DisplayGrammar(Grammar grammar)
