@@ -6,8 +6,14 @@ namespace Devoir_1
 {
     class Link
     {
-        public int value;
+        public char terminal;
         public Node node;
+
+        public Link(char terminal, char nextCircleLetter)
+        {
+            this.terminal = terminal;
+            this.node = new Node(nextCircleLetter);
+        }
 
     }
 }

@@ -8,5 +8,10 @@ namespace Devoir_1
     {
         public char letter;
         public bool isFinal;
+
+        public Circle(char letter)
+        {
+            this.letter = letter;
+        }
     }
 }

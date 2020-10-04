@@ -48,7 +48,8 @@ namespace Devoir_1
                 Console.WriteLine("1- Créer une nouvelle grammaire");
                 Console.WriteLine("2- Charger une grammaire existante");
                 Console.WriteLine("3- Visualiser la grammaire actuelle");
-                Console.WriteLine("4- Quitter");
+                Console.WriteLine("4- Executer l'automate");
+                Console.WriteLine("5- Quitter");
 
                 string input = Console.ReadLine();                                      //  Lecture de la réponse
 
@@ -57,7 +58,8 @@ namespace Devoir_1
                     case "1":                                                               // Si 1 : Création de la grammaire
                     case "2":                                                               // Si 2 : Importation de la grammaire
                     case "3":                                                               // Si 3 : Visualisation de la grammaire
-                    case "4":                                                               // Si 4 : Fermeture de l'application
+                    case "4":                                                               // Si 4 : Exécution de l'automate
+                    case "5":                                                               // Si 5 : Fermeture de l'application
                         return input;
                     default:                                                                // Si entrée invalide
                         invalidInput = true;

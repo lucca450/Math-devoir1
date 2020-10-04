@@ -13,15 +13,6 @@ namespace Devoir_1
 
         static void Main(string[] args)
         {
-           
-
-            Console.WriteLine("\n\n\n\n Vérifier les règles importées \n\n\n");
-
-
-
-
-
-
             Grammar grammar = null;
             bool done = false;
             while (!done)
@@ -58,7 +49,19 @@ namespace Devoir_1
                             MyConsole.WaitForAnyInput();
                         }
                         break;
-                    case "4":                                                               // Si 4 : Fermeture de l'application
+                    case "4":                                                               // Si 4 : Exécution de l'automate
+                        if(grammar != null)
+                        {
+                            Robot automaton = new Robot(grammar);
+                            automaton.Execute();
+                        }
+                        else
+                        {
+                            MyConsole.MustImportGrammarFirst();
+                            MyConsole.WaitForAnyInput();
+                        }
+                        break;
+                    case "5":                                                               // Si 5 : Fermeture de l'application
                         done = true;
                         break;
                     default:                                                                // Si entrée invalide
