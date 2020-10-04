@@ -79,6 +79,11 @@ namespace Devoir_1
             Console.WriteLine("Importation réussie");
         }
 
+        internal static void NoRuleToDelete()
+        {
+            Console.WriteLine("Il n'y a aucune règle à supprimer.");
+        }
+
         public static void InvalidImport()
         {
             Console.WriteLine("La grammaire n'a pas été importée. Vérifiez vos régles, car elles ne respectent pas le format demandé.");

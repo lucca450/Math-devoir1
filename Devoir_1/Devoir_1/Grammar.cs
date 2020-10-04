@@ -99,9 +99,14 @@ namespace Devoir_1
                         ModifyRule(choice);
                         break;
                     case "2":
-                        MyConsole.DisplayGrammarWithOptions(this);
-                        choice = MyConsole.AskForRuleSelection("supprimer", rules.Count);
-                        RemoveRule(choice);
+                        if(rules.Count != 0)
+                        {
+                            MyConsole.DisplayGrammarWithOptions(this);
+                            choice = MyConsole.AskForRuleSelection("supprimer", rules.Count);
+                            RemoveRule(choice);
+                        }
+                        else
+                            MyConsole.NoRuleToDelete();
                         break;
                     case "3":
                         List<string> newRules = MyConsole.AskRules(this, true);
@@ -186,6 +191,7 @@ namespace Devoir_1
                         break;
                     case "2":                                                               // Si 2 : Suppression de la grammaire
                         Delete();
+                        done = true;
                         break;
                     case "3":                                                               // Si 3 : Affichage de la grammaire
                         MyConsole.DisplayGrammar(this);
