@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vince\\OneDrive - Université du Québec à Trois-Rivières\\School\\UNI\\A-2020\\Math\\Devoir1\\Devoir_1\\Devoir_1\\Devoir_1.csproj": {}
+    "C:\\Users\\lucca\\OneDrive - Université du Québec à Trois-Rivières\\UQTR\\Notes de cours\\SESSION 3\\Mathématiques pour informaticiens II\\devoir1\\Devoir_1\\Devoir_1\\Devoir_1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vince\\OneDrive - Université du Québec à Trois-Rivières\\School\\UNI\\A-2020\\Math\\Devoir1\\Devoir_1\\Devoir_1\\Devoir_1.csproj": {
+    "C:\\Users\\lucca\\OneDrive - Université du Québec à Trois-Rivières\\UQTR\\Notes de cours\\SESSION 3\\Mathématiques pour informaticiens II\\devoir1\\Devoir_1\\Devoir_1\\Devoir_1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vince\\OneDrive - Université du Québec à Trois-Rivières\\School\\UNI\\A-2020\\Math\\Devoir1\\Devoir_1\\Devoir_1\\Devoir_1.csproj",
+        "projectUniqueName": "C:\\Users\\lucca\\OneDrive - Université du Québec à Trois-Rivières\\UQTR\\Notes de cours\\SESSION 3\\Mathématiques pour informaticiens II\\devoir1\\Devoir_1\\Devoir_1\\Devoir_1.csproj",
         "projectName": "Devoir_1",
-        "projectPath": "C:\\Users\\vince\\OneDrive - Université du Québec à Trois-Rivières\\School\\UNI\\A-2020\\Math\\Devoir1\\Devoir_1\\Devoir_1\\Devoir_1.csproj",
-        "packagesPath": "C:\\Users\\vince\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vince\\OneDrive - Université du Québec à Trois-Rivières\\School\\UNI\\A-2020\\Math\\Devoir1\\Devoir_1\\Devoir_1\\obj\\",
+        "projectPath": "C:\\Users\\lucca\\OneDrive - Université du Québec à Trois-Rivières\\UQTR\\Notes de cours\\SESSION 3\\Mathématiques pour informaticiens II\\devoir1\\Devoir_1\\Devoir_1\\Devoir_1.csproj",
+        "packagesPath": "C:\\Users\\lucca\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lucca\\OneDrive - Université du Québec à Trois-Rivières\\UQTR\\Notes de cours\\SESSION 3\\Mathématiques pour informaticiens II\\devoir1\\Devoir_1\\Devoir_1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\vince\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lucca\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,7 +54,7 @@
             },
             {
               "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.0.3, 3.0.3]"
+              "version": "[3.0.1, 3.0.1]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
@@ -70,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

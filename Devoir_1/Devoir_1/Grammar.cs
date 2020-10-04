@@ -161,7 +161,15 @@ namespace Devoir_1
         }
         private void RemoveRule(int choice)
         {
+            List<string> beforeRules = rules.ToList();
             rules.RemoveAt(choice - 1);
+
+            if (!ThereIsAnotherSRule())
+            {
+                MyConsole.YouCantChangeTheOnlySRule();
+                MyConsole.NoChange();
+                rules = beforeRules;
+            }
         }
         public void Visualize()
         {
