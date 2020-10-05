@@ -41,7 +41,27 @@ namespace Devoir_1
                 {
                     case true when noLetterSRule :
                         int i = 0;
-
+                        if (myNodes.Count != 0)
+                        {
+                            foreach (var node in myNodes)
+                            {
+                                if (rule[0] == node.letter)
+                                {
+                                    node.nodeLinks.Add(new Link(rule[0], rule[3], 'F'));
+                                }
+                                else
+                                {
+                                    Node n0 = new Node(rule[0], false, new Link(rule[0], rule[3], 'F'));
+                                    myNodes.Add(n0);
+                                }
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Node n0 = new Node(rule[0], false, new Link(rule[0], rule[3], 'F'));
+                            myNodes.Add(n0);
+                        }
                         break;
                     case true when sRule:
                         int h = 0;
