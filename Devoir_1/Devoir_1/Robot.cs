@@ -45,8 +45,30 @@ namespace Devoir_1
                         break;
                     case true when sRule:
                         int h = 0;
-                        Node n1 = new Node(rule[0],false,new Link(rule[0], rule[3] , char.Parse(rule.Substring(rule.Length - 1))));
-                        myNodes.Add(n1);
+
+                        if (myNodes.Count != 0)
+                        {
+                            foreach (var node in myNodes)
+                            {
+                                if (rule[0] == node.letter)
+                                {
+                                    node.nodeLinks.Add(new Link (rule[0], rule[3], char.Parse(rule.Substring(rule.Length - 1))));
+                                }
+                                else
+                                {
+                                    Node n1 = new Node(rule[0],false,new Link(rule[0], rule[3] , char.Parse(rule.Substring(rule.Length - 1))));
+                                    myNodes.Add(n1);
+                                }
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Node n1 = new Node(rule[0], false, new Link(rule[0], rule[3], char.Parse(rule.Substring(rule.Length - 1))));
+                            myNodes.Add(n1);
+                        }
+
+
 
                         break;
                     case true when noLetterRule && !noLetterSRule:
@@ -66,15 +88,34 @@ namespace Devoir_1
                 }
             }
 
-            List<Node> mySnodeRules = new List<Node>();
-          /*  foreach (var node in myNodes)
+
+
+           //Console.WriteLine( String.Format("|{0,10}|{1,10}|{2,10}|{3,10}|", myNodes[0].letter, myNodes[1].letter, myNodes[2].letter, myNodes[3].letter));
+
+
+            foreach (var node in myNodes)
             {
-                if (node.from == 'S')
+               //myNodes node.nodeLinks
+
+
+                Console.WriteLine(node.letter + ": ");
+                foreach (var link in node.nodeLinks)
                 {
-                    mySnodeRules.Add(node);
+                    Console.WriteLine("From " + link.from + " using " + link.road + " to " + link.to + ": ");
                 }
-                Console.WriteLine(node.from + " " + node.road + " " + node.to + " " + node.final + "\n");
-            }*/
+            }
+
+
+
+            /*
+            foreach (var link in node.nodeLinks)
+            {
+                Console.WriteLine(link.from + " " + link.road + " " + link.to + ": \n");
+            }
+            */
+
+
+           
             return null;
         }
     }
