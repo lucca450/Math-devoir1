@@ -16,14 +16,12 @@ namespace Devoir_1
             this.node = new Node(nextCircleLetter);
         }
         */
-        public char from;
-        public char road;
+        public char terminal;
         public char to;
 
-        public Link(char from, char road, char to)
+        public Link(char terminal, char to)
         {
-            this.from = from;
-            this.road = road;
+            this.terminal = terminal;
             this.to = to;
         }
     }

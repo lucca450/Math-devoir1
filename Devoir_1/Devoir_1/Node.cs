@@ -23,7 +23,7 @@ namespace Devoir_1
          */
         public char letter;
         public bool isFinal;
-        public List<Link> nodeLinks = new List<Link>();
+        public List<Link> links = new List<Link>();
 
 
 
@@ -31,7 +31,7 @@ namespace Devoir_1
         {
             this.letter = letter;
             this.isFinal = isFinal;
-            nodeLinks.Add(link);
+            links.Add(link);
         }
 
         public Node(char letter, bool isFinal)

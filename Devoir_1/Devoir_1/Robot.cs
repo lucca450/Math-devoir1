@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Data;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -9,6 +11,7 @@ namespace Devoir_1
     class Robot
     {
         public Grammar grammar;
+        private List<Node> nodes = new List<Node>();
 
         public Robot(Grammar grammar)
         {
@@ -17,232 +20,81 @@ namespace Devoir_1
 
         public void Execute()
         {
-            //Node firstNode = BuildNodeList();
-            List<Node> nodesList = BuildNodeList();
+            BuildNodeList();
+            MyConsole.DisplayNodes(nodes);
 
+            MyConsole.WaitForAnyInput();
         }
 
-        private List<Node> BuildNodeList()
+        private Node LookForFinalNode()
         {
-            char firstLetter, nextLetter, terminal;
-            List<Node> myNodes = new List<Node>();
+            foreach(Node n in nodes)
+            {
+                if(n.isFinal && n.letter == 'Z')
+                {
+                    return n;
+                }
+            }
 
-            bool needToCreateFnode = false;
-            bool foundSameLetter = false;
-            Node nodeWithSameLetter = null;
+            Node finalNode = new Node('Z', true);
+            nodes.Add(finalNode);
+
+            return finalNode;
+        }
+
+        private Node FindNodeWithLetter(char letter)
+        {
+            foreach(Node n in nodes)
+                if (n.letter == letter)
+                    return n;
+
+            Node newNode = new Node(letter, false);
+            nodes.Add(newNode);
+            return newNode;
+        }
+        
+        private void BuildNodeList()
+        {
+            Node finalNode, nextNode;
+            char firstLetter, terminal, nextLetter;
+
+            Node firstNode = new Node('S', false);
+            nodes.Add(firstNode);
+
+            Node currentNode;
             foreach (string rule in grammar.rules)
             {
                 bool sRule, noLetterRule, normalRule, emptySRule, noLetterSRule;
 
                 noLetterSRule = Regex.IsMatch(rule, "^(?:[S]->[0-1]{1})$");
                 sRule = Regex.IsMatch(rule, "^(?:[S]->[0-1]{1}[A-Z]{1})$");
-                noLetterRule = Regex.IsMatch(rule, "^(?:[A-Z]->[0-1]{1})$");
-                normalRule = Regex.IsMatch(rule, "^(?:[A-Z]->[0-1]{1}[A-Z]{1})$");
+                noLetterRule = Regex.IsMatch(rule, "^(?:[A-Y]->[0-1]{1})$");
+                normalRule = Regex.IsMatch(rule, "^(?:[A-Y]->[0-1]{1}[A-Y]{1})$");
                 emptySRule = Regex.IsMatch(rule, "^(?:S->e)$");
+
+                firstLetter = rule[0];
+                terminal = rule[3];
 
                 switch (true)
                 {
-                    case true when noLetterSRule :
-                        int i = 0;
-                        if (myNodes.Count != 0)
-                        {
-                            foreach (var node in myNodes)
-                            {
-                                if (rule[0] == node.letter)
-                                {
-                                    node.nodeLinks.Add(new Link(rule[0], rule[3], 'F'));
-                                    needToCreateFnode = true;
-                                }
-                                else
-                                {
-                                    Node n0 = new Node(rule[0], false, new Link(rule[0], rule[3], 'F'));
-                                    myNodes.Add(n0);
-                                    needToCreateFnode = true;
-                                }
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            Node n0 = new Node(rule[0], false, new Link(rule[0], rule[3], 'F'));
-                            myNodes.Add(n0);
-                            needToCreateFnode = true;
-                        }
+                    case true when noLetterRule || noLetterSRule:                           // X->1 ou S->1
+                        currentNode = FindNodeWithLetter(firstLetter);
+                        finalNode = LookForFinalNode();
+                        currentNode.links.Add(new Link(terminal, finalNode.letter));
                         break;
+                    case true when normalRule || sRule:                                     // S->1S ou S->1X ou X->1S
+                        nextLetter = rule[4];
 
-                    case true when sRule:
-                        int h = 0;
+                        currentNode = FindNodeWithLetter(firstLetter);
+                        nextNode = FindNodeWithLetter(nextLetter);
 
-                        if (myNodes.Count != 0)
-                        {
-                            foreach (var node in myNodes)
-                            {
-                                if (rule[0] == node.letter)
-                                {
-                                    node.nodeLinks.Add(new Link (rule[0], rule[3], char.Parse(rule.Substring(rule.Length - 1))));
-                                }
-                                else
-                                {
-                                    Node n1 = new Node(rule[0],false,new Link(rule[0], rule[3] , char.Parse(rule.Substring(rule.Length - 1))));
-                                    myNodes.Add(n1);
-                                }
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            Node n1 = new Node(rule[0], false, new Link(rule[0], rule[3], char.Parse(rule.Substring(rule.Length - 1))));
-                            myNodes.Add(n1);
-                        }
+                        currentNode.links.Add(new Link(terminal, nextNode.letter));
                         break;
-                    case true when noLetterRule && !noLetterSRule:
-                        int j = 0;
-                        foundSameLetter = false;
-                        nodeWithSameLetter = null;
-                        if (myNodes.Count != 0)
-                        {
-                            foreach (var node in myNodes)
-                            {
-                                if (rule[0] == node.letter)
-                                {
-                                    foundSameLetter = true;
-                                    nodeWithSameLetter = node;
-                                    needToCreateFnode = true;
-                                    /*node.nodeLinks.Add(new Link(rule[0], rule[3], 'F'));
-                                    needToCreateFnode = true;*/
-                                }
-                                else
-                                {
-                                    /* Node n2 = new Node(rule[0], false, new Link(rule[0], rule[3], 'F'));
-                                     myNodes.Add(n2);
-                                     needToCreateFnode = true;*/
-                                    needToCreateFnode = true;
-                                }
-                                //break;
-                            }
-
-                            if (foundSameLetter == true)
-                            {
-                                nodeWithSameLetter.nodeLinks.Add(new Link(rule[0], rule[3], 'F'));
-                            }
-                            else
-                            {
-                                Node n2 = new Node(rule[0], false, new Link(rule[0], rule[3], 'F'));
-                                myNodes.Add(n2);
-                            }
-                        }
-                        else
-                        {
-                            Node n2 = new Node(rule[0], false, new Link(rule[0], rule[3], 'F'));
-                            myNodes.Add(n2);
-                            needToCreateFnode = true;
-                        }
-                        break;
-                    case true when normalRule && !sRule:
-                        int k = 0;
-                        foundSameLetter = false;
-                        nodeWithSameLetter = null;
-                        if (myNodes.Count != 0)
-                        {
-                            foreach (var node in myNodes)
-                            {
-                                if (rule[0] == node.letter)
-                                {
-                                    foundSameLetter = true;
-                                    nodeWithSameLetter = node;
-                                    //node.nodeLinks.Add(new Link(rule[0], rule[3], char.Parse(rule.Substring(rule.Length - 1))));
-                                }
-                                else
-                                {
-                                    /*Node n3 = new Node(rule[0], false, new Link(rule[0], rule[3], char.Parse(rule.Substring(rule.Length - 1))));
-                                    myNodes.Add(n3);*/
-
-                                }
-                                //break;
-                            }
-
-                            if (foundSameLetter == true)
-                            {
-                                nodeWithSameLetter.nodeLinks.Add(new Link(rule[0], rule[3], char.Parse(rule.Substring(rule.Length - 1))));
-                            }
-                            else
-                            {
-                                Node n3 = new Node(rule[0], false, new Link(rule[0], rule[3], char.Parse(rule.Substring(rule.Length - 1))));
-                                myNodes.Add(n3);
-                            }
-                        }
-                        else
-                        {
-                            Node n3 = new Node(rule[0], false, new Link(rule[0], rule[3], char.Parse(rule.Substring(rule.Length - 1))));
-                            myNodes.Add(n3);
-                        }
-                        break;
-                    case true when emptySRule:
-                        int l = 0;
-                        if (myNodes.Count != 0)
-                        {
-                            foreach (var node in myNodes)
-                            {
-                                if (rule[0] == node.letter)
-                                {
-                                    node.nodeLinks.Add(new Link(rule[0], rule[3], 'S'));
-                                    node.isFinal = true;
-                                }
-                                else
-                                {
-                                    Node n4 = new Node(rule[0], true, new Link(rule[0], rule[3], 'S'));
-                                    myNodes.Add(n4);
-                                }
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            Node n4 = new Node(rule[0], true, new Link(rule[0], rule[3], 'S'));
-                            myNodes.Add(n4);
-                        }
+                    case true when emptySRule:                                              // S->e
+                        firstNode.isFinal = true;
                         break;
                 }
-
-
             }
-            if (needToCreateFnode == true)
-            {
-                Node n5 = new Node('F', true);
-                myNodes.Add(n5);
-            }
-
-
-            //Console.WriteLine( String.Format("|{0,10}|{1,10}|{2,10}|{3,10}|", myNodes[0].letter, myNodes[1].letter, myNodes[2].letter, myNodes[3].letter));
-
-
-            foreach (var node in myNodes)
-            {
-               //myNodes node.nodeLinks
-
-
-                Console.WriteLine(node.letter + ": ");
-                foreach (var link in node.nodeLinks)
-                {
-                    Console.WriteLine("From " + link.from + " using " + link.road + " to " + link.to);
-                }
-            }
-
-            foreach (var node in myNodes)
-            {
-                Console.WriteLine(node.letter + ": final? " + node.isFinal);
-            }
-
-            /*
-            foreach (var link in node.nodeLinks)
-            {
-                Console.WriteLine(link.from + " " + link.road + " " + link.to + ": \n");
-            }
-            */
-
-
-
-            return null;
         }
     }
 }

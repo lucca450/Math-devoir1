@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -342,6 +343,75 @@ namespace Devoir_1
             }
         }
 
-        
+        private static readonly int tableWidth = 60;
+
+        static void PrintLine()
+        {
+            Console.WriteLine(new string('-', tableWidth));
+        }
+
+        static void PrintRow(params string[] columns)
+        {
+            int width = (tableWidth - columns.Length) / columns.Length;
+            string row = "|";
+
+            foreach (string column in columns)
+            {
+                row += AlignCentre(column, width) + "|";
+            }
+
+            Console.WriteLine(row);
+        }
+
+        static string AlignCentre(string text, int width)
+        {
+            text = text.Length > width ? text.Substring(0, width - 3) + "..." : text;
+
+            if (string.IsNullOrEmpty(text))
+            {
+                return new string(' ', width);
+            }
+            else
+            {
+                return text.PadRight(width - (width - text.Length) / 2).PadLeft(width);
+            }
+        }
+
+        public static void DisplayNodes(List<Node> nodes)
+        {
+            PrintLine();
+            PrintRow("Etats", "Terminal 0", "Terminal 1");
+            PrintLine();
+
+            string terminal0, terminal1, finalNodes = "";
+
+            foreach(Node node in nodes)
+            {
+                if (node.isFinal)
+                    finalNodes += node.letter;
+                if(node.letter != 'Z')
+                {
+                    terminal0 = "";
+                    terminal1 = "";
+
+                    foreach(Link link in node.links)
+                    {
+                        if (link.terminal.Equals('0'))
+                            terminal0 += link.to;
+                        else
+                            terminal1 += link.to;
+                    }
+
+                    terminal0 = string.Join<char>(",", terminal0);
+                    terminal1 = string.Join<char>(",", terminal1);
+
+                    PrintRow(node.letter.ToString(), terminal0, terminal1);
+                }
+            }
+            PrintLine();
+
+            Console.WriteLine("Les noeuds finaux sont : " + string.Join<char>(",", finalNodes));
+
+        }
     }
 }
