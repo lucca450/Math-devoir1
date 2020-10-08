@@ -1,9 +1,5 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Devoir_1
@@ -21,7 +17,7 @@ namespace Devoir_1
             this.rules = rules;
         }
 
-        public bool RuleDuplicate()
+        public bool RuleDuplicate()                                             // Retourne vrai si une règle est double
         {
             return rules.Count != rules.Distinct().Count();
         }
@@ -30,34 +26,34 @@ namespace Devoir_1
             string fileName, path;
             List<string> rules;
 
-            if (!isImport)
+            if (!isImport)                                              //  Si on veut créer une grammaire
             {
-                fileName = MyConsole.AskFileName();                             //  Lecture du nom du fichier
+                fileName = MyConsole.AskFileName();                             //  Demande du nom du fichier
                 path = MyFileManager.FormatPath(fileName);                      //  Formatage du chemin du fichier
 
-                rules = MyConsole.AskRules(this);
+                rules = MyConsole.AskRules(this);                               //  Demander les règles à l'utilisateur
 
-                if (MyConsole.AskForConfirmation())
+                if (MyConsole.AskForConfirmation())                             //  Demande de sauvegarder
                 {
                     this.fileName = fileName;
                     this.path = path;
                     this.rules = rules;
-                    MyFileManager.WriteGrammarInFile(this);
+                    MyFileManager.WriteGrammarInFile(this);                     //  Écriture de la règle dans le fichier
                 }
-            }
+            }       
             else
-            {
-                this.fileName = MyConsole.AskFileName(true);
-                this.path = MyFileManager.FormatPath(this.fileName);
+            {                                                           //  Si on veut importer une grammaire
+                this.fileName = MyConsole.AskFileName(true);                //  Demande du nom du fichier
+                this.path = MyFileManager.FormatPath(this.fileName);        //  Formatage du chemin du fichier
 
-                this.rules = MyFileManager.ReadRulesFromFile(this.path);
+                this.rules = MyFileManager.ReadRulesFromFile(this.path);    //  Lecture des règles du fichier
 
-                if (VerifyRules())
+                if (VerifyRules())                                      //  Si règles valides
                 {
-                    MyConsole.SuccessfulImport();
+                    MyConsole.SuccessfulImport();                           //  Réussite importation
                 }else
-                {
-                    MyConsole.InvalidImport();
+                {                                                       // Si règle(s) invalide(s)
+                    MyConsole.InvalidImport();                          // Roll Back
                     this.fileName = null;
                     this.path = null;
                     this.rules = null;
@@ -69,16 +65,21 @@ namespace Devoir_1
         {
             bool error = false;
             int sRuleCounter = 0;
-            foreach (var rule in rules)
+            foreach (var rule in rules)                                 //  Pour chaque règle
             {
-                if (rule.Contains("S"))
+                if (rule.Contains("S"))                                     // Si   la règle contient S
                 {
-                    sRuleCounter++;
+                    sRuleCounter++;                                             //  conteur de règle S
                 }
-                if (!Regex.IsMatch(rule, "^(?:[A-Z]->[0-1]{1}[A-Z]{1}|[A-Z]->[0-1]{1}|S->e)") || RuleDuplicate()) 
+                if (!Regex.IsMatch(rule, "^(?:[A-Y]->[0-1]{1}[A-Y]{1}|[A-Y]->[0-1]{1}|S->e)"))  //   Si le format est valide
                 {
                     error = true;
                 }
+            }
+
+            if (RuleDuplicate())                                        //  S'il existe des doublons
+            {
+                error = true;
             }
 
             return !error && sRuleCounter >= 1;
@@ -87,37 +88,37 @@ namespace Devoir_1
         public void Edit()
         {
             bool done = false;
-            while (!done)
+            while (!done)                                                               //  Tant que pas fini
             {
                 int choice;
-                string input = MyConsole.AskForMenuSelection();
+                string input = MyConsole.AskForMenuSelection();                             //  Demande ce que l'utilisateur veut faire                                
                 switch (input)
                 {
-                    case "1":
+                    case "1":                                                               //  Modifier une règle
                         MyConsole.DisplayGrammarWithOptions(this);
-                        choice = MyConsole.AskForRuleSelection("modifier", rules.Count);
-                        ModifyRule(choice);
+                        choice = MyConsole.AskForRuleSelection("modifier", rules.Count);        //  Demander quelle règle modifier
+                        ModifyRule(choice);                                                     //  Modifier la règle
                         break;
-                    case "2":
+                    case "2":                                                               //  Supprimer une règle
                         if(rules.Count != 0)
                         {
                             MyConsole.DisplayGrammarWithOptions(this);
-                            choice = MyConsole.AskForRuleSelection("supprimer", rules.Count);
-                            RemoveRule(choice);
+                            choice = MyConsole.AskForRuleSelection("supprimer", rules.Count);   //  Demander quelle règle supprimer
+                            RemoveRule(choice);                                                 //  Supprimer la règle
                         }
                         else
                             MyConsole.NoRuleToDelete();
                         break;
-                    case "3":
-                        List<string> newRules = MyConsole.AskRules(this, true);
+                    case "3":                                                               //  Ajouter des règles
+                        List<string> newRules = MyConsole.AskRules(this, true);                 //  Demande les règles
 
-                        if (MyConsole.AskForConfirmation())
+                        if (MyConsole.AskForConfirmation())                                     //  Confirmer la sauvegarde
                         {
-                            rules.AddRange(newRules);
-                            MyFileManager.WriteGrammarInFile(this, newRules);
+                            rules.AddRange(newRules);                                           //  Ajouter les règles à l'objet grammaire
+                            MyFileManager.WriteGrammarInFile(this, newRules);                   //  Ajouter les règles au fichier de la grammaire
                         }
                         break;
-                    case "4":
+                    case "4":                                                               //  Quitter
                         done = true;
                         break;
                     default:
@@ -128,36 +129,36 @@ namespace Devoir_1
         }
         private void ModifyRule(int choice)
         {
-            string newRule = MyConsole.AskRule(this);
-            List<string> beforeRules = rules.ToList();
+            string newRule = MyConsole.AskRule(this);                                       //  Demander une règle
+            List<string> beforeRules = rules.ToList();                                      //  règles avant modification
 
-            string beingReplacedRule = rules[choice - 1];
-            rules[choice - 1] = newRule;
+            string beingReplacedRule = rules[choice - 1];                                   //  règles qui sera remplacé
+            rules[choice - 1] = newRule;                                                    //  Remplacement de la règle
 
-            if (newRule.Contains("S") || !beingReplacedRule.Contains("S") || ThereIsAnotherSRule())
+            if (newRule.Contains("S") || !beingReplacedRule.Contains("S") || ThereIsAnotherSRule())     //  Si la nouvelle règle contient S ou la règle remplacée ne contient pas de S ou Si il y a une autre règle S
             {
-                if (MyConsole.AskForConfirmation())
+                if (MyConsole.AskForConfirmation())                                         //  Demande de sauvegarde
                 {
-                    MyFileManager.WriteGrammarInFile(this);
+                    MyFileManager.WriteGrammarInFile(this);                                 //  Mise à jour du fichier
                 }
                 else
                 {
-                    rules = beforeRules;
+                    rules = beforeRules;                                                    //  Rollback avec le backup
                     MyConsole.NoChange();
                 }
             }
             else
-            {
-                MyConsole.YouCantChangeTheOnlySRule();
+            {                                                                               //  Si aucune autre règle S existe
+                MyConsole.YouCantChangeTheOnlySRule();                                      //  rollback avec le backup
                 rules = beforeRules;
                 MyConsole.NoChange();
             }
         }
         private bool ThereIsAnotherSRule()
         {
-            foreach (string rule in rules)
+            foreach (string rule in rules)                                                  //  Pour chaque règle
             {
-                if (rule.Contains("S"))
+                if (rule.Contains("S"))                                                         // Si elle contient S
                 {
                     return true;
                 }
@@ -166,14 +167,14 @@ namespace Devoir_1
         }
         private void RemoveRule(int choice)
         {
-            List<string> beforeRules = rules.ToList();
-            rules.RemoveAt(choice - 1);
+            List<string> beforeRules = rules.ToList();                                      //  backup
+            rules.RemoveAt(choice - 1);                                                     //  Retrait de la règle
 
-            if (!ThereIsAnotherSRule())
+            if (!ThereIsAnotherSRule())                                                     //  Si il n'y a pas d'autre règle S
             {
                 MyConsole.YouCantChangeTheOnlySRule();
                 MyConsole.NoChange();
-                rules = beforeRules;
+                rules = beforeRules;                                                        //  Rollback avec le backup
             }
         }
         public void Visualize()
@@ -208,8 +209,8 @@ namespace Devoir_1
 
         private void Delete()
         {
-            MyFileManager.DeleteFile(path);
-            path = null;
+            MyFileManager.DeleteFile(path);                                                 //  Suppression du fichier
+            path = null;                                                                    //  Remise de l'objet grammaire à null
             fileName = null;
             rules = null;
         }

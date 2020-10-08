@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-
-namespace Devoir_1
+﻿namespace Devoir_1
 {
     class Program
     {
@@ -54,6 +47,11 @@ namespace Devoir_1
                         {
                             Robot automaton = new Robot(grammar);
                             automaton.Execute();
+                            string terminals = MyConsole.AskTerminalInput();
+                            int nbWorkingPaths = automaton.CountWorkingPaths(terminals);
+
+                            MyConsole.DisplayWorkingPaths(nbWorkingPaths, terminals);
+                            MyConsole.WaitForAnyInput();
                         }
                         else
                         {

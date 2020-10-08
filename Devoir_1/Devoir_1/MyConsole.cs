@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Devoir_1
@@ -23,8 +21,8 @@ namespace Devoir_1
                 else
                     done = !MyFileManager.FileExists(path);                                   //  Vérification de l'existance du fichier
 
-                if (!done)
-                    if (isImport)
+                if (!done)                                                                      //  Si pas fini
+                    if (isImport)                                                                   // Si en cours d'importation
                         Console.WriteLine("Aucune grammaire trouvée.\n");
                     else
                         Console.WriteLine("Une grammaire avec ce nom existe déjà.\n");
@@ -38,7 +36,7 @@ namespace Devoir_1
             bool invalidInput = true;
             while (invalidInput)                                                        //  Tant que l'utiliseur n'a pas de entrée de donnée valide
             {
-                Console.Clear();
+                Console.Clear();                                                        //  Clear de la console
 
                 if (!fileName.Equals(""))
                     Console.WriteLine("Grammaire importée : " + fileName + "\n");
@@ -69,35 +67,65 @@ namespace Devoir_1
                 }
             }
             return "-1";
+        }   
+
+        public static void DisplayWorkingPaths(int nbWorkingPaths, string terminals)    //  Affichage des résultats des terminaux selon la grammaire
+        {
+            Console.WriteLine(string.Format("Les terminaux {0} ont généré {1} chemin(s) valide(s) !", terminals, nbWorkingPaths));
         }
 
-        public static void WaitForAnyInput()
+        public static string AskTerminalInput()
+        {
+            string terminals = "";
+            Console.Write("Entrer la liste des terminaux (1 ou 0): ");
+            bool ok = false;
+
+            while (!ok)                                                     //  Tant que pas ok
+            {
+                ok = true;
+                terminals = Console.ReadLine();                                 //  Lecture de l'entrée
+
+                foreach(char c in terminals)
+                    if(c != '0' && c != '1')                                    //  Vérification de l'entrée si c'est seulement des 1 ou des 0
+                        ok = false;
+                    
+                if (terminals.Equals(""))                                       //  Autorisation de ne rien entrée
+                    ok = true;
+
+                if (!ok)
+                    Console.Write("Ce n'est pas valide. Entrer la liste des terminaux (1 ou 0): ");
+            }
+
+            return terminals;                                              // Retourne les terminaux
+        }
+
+        public static void WaitForAnyInput()                                //  En attente de l'utilisateur
         {
             Console.WriteLine("\nAppuyer sur une touche pour continuer\n");
             Console.ReadLine();
         }
 
-        public static void SuccessfulImport()
+        public static void SuccessfulImport()                               //  Succès importation
         {
             Console.WriteLine("Importation réussie");
         }
 
-        internal static void NoRuleToDelete()
+        public static void NoRuleToDelete()                               //  Aucune règle à supprimer
         {
             Console.WriteLine("Il n'y a aucune règle à supprimer.");
         }
 
-        public static void InvalidImport()
+        public static void InvalidImport()                                  //  Impossible d'importer
         {
             Console.WriteLine("La grammaire n'a pas été importée. Vérifiez vos régles, car elles ne respectent pas le format demandé.");
         }
 
-        public static void MustImportGrammarFirst()
+        public static void MustImportGrammarFirst()                         // Doit importer une grammaire d'abord
         {
             Console.WriteLine("Veuillez d'abord importer une grammaire");
         }
 
-        public static string AskRule(Grammar grammar)
+        public static string AskRule(Grammar grammar)                       //  Demande d'une règle
         {
             string rule = "";
 
@@ -105,14 +133,16 @@ namespace Devoir_1
             while (!validRule)
             {
                 Console.WriteLine("Entrez une règle à la grammaire. Respectez le format suivant: S->e OU X->1 OU X->1X");
-                rule = Console.ReadLine().Trim();
+                rule = Console.ReadLine().Trim();                                                                               //  Entrée de la règle
 
-                if (Regex.IsMatch(rule, "^(?:[A-Z]->[0-1]{1}[A-Z]{1}|[A-Z]->[0-1]{1}|S->e)"))
+                if (Regex.IsMatch(rule, "^(?:[A-Z]->[0-1]{1}[A-Z]{1}|[A-Z]->[0-1]{1}|S->e)"))                                       // Si le format convient 
                 {
-                    if (!grammar.rules.Contains(rule))
+                    if (!grammar.rules.Contains(rule))                                                                              //  
                     {
                         validRule = true;
                     }
+                    else
+                        Console.WriteLine("La règle existe déjà");
                 }
                 else
                 {
@@ -128,7 +158,7 @@ namespace Devoir_1
             bool invalidInput = true, done = false;
             while (invalidInput || !done)                                                        //  Tant que l'utiliseur n'a pas de entrée de donnée valide
             {
-                Console.WriteLine("Choisissez parmis les fonctions suivantes :");       //  Menu de l'application
+                Console.WriteLine("Choisissez parmis les fonctions suivantes :");                   //  Menu de l'application
                 Console.WriteLine("1- Modifier une regle");
                 Console.WriteLine("2- Supprimer une regle");
                 Console.WriteLine("3- Ajouter une ou plusieurs regles");
@@ -151,22 +181,22 @@ namespace Devoir_1
             return "";
         }
 
-        public static void NoChange()
+        public static void NoChange()                   
         {
             Console.WriteLine("Aucun changement");
-        }
+        }                                       //  Aucun changement
 
         public static void YouCantChangeTheOnlySRule()
         {
             Console.WriteLine("Vous ne pouvez pas retirer la seule règle S");
-        }
+        }                                       // Impossible de changer la seule règle S
 
         public static void Error()
         {
             Console.WriteLine("This Shouldn't be happening !!!");
         }
 
-        public static List<string> AskRules(Grammar grammar, bool adding = false)
+        public static List<string> AskRules(Grammar grammar, bool adding = false)               //  Demande de règles
         {
             Console.WriteLine("Sachez que :\n" +
                 "- S est le symbole de départ\n" +
@@ -179,7 +209,7 @@ namespace Devoir_1
             bool done = false;
             while (!done)                                                           //  Tant que l'utilisateur n'a pas fini d'écrire de règle
             {
-                string rule = AskRule(grammar);
+                string rule = AskRule(grammar);                                         //  Demande une règle
                 rules.Add(rule);                                                        //  Ajoute la règle dans la liste
 
                 Console.WriteLine(string.Format("Règle ajoutée: {0}", rule));
@@ -231,7 +261,7 @@ namespace Devoir_1
                 Console.WriteLine("3- Afficher la grammaire");
                 Console.WriteLine("4- Quitter");
 
-                string input = Console.ReadLine();
+                string input = Console.ReadLine();                                          //  Lecture de l'entrée de l'input
 
                 switch (input)
                 {
@@ -272,17 +302,17 @@ namespace Devoir_1
             return false;
         }
 
-        public static void DisplayGrammarWithOptions(Grammar grammar)
+        public static void DisplayGrammarWithOptions(Grammar grammar)                       //  Formatte les règles avec une choix
         {
             int i = 1;
             foreach (string rule in grammar.rules)
             {
-                Console.WriteLine(string.Format("{0}- {1}", i, rule));
+                Console.WriteLine(string.Format("{0}- {1}", i, rule));                  
                 i++;
             }
         }
 
-        public static int AskForRuleSelection(string keyword, int max)
+        public static int AskForRuleSelection(string keyword, int max)                      //  Sélection de la règle
         {
             int choice = -1;
             bool invalidInput = true;
@@ -293,8 +323,8 @@ namespace Devoir_1
 
                 try
                 {
-                    choice = int.Parse(input);
-                    invalidInput = choice < 1 || choice > max;
+                    choice = int.Parse(input);                                              //  Conversion de l'entrée en entier
+                    invalidInput = choice < 1 || choice > max;                              //  Si le choix est plus grand que 1 et plus petit que le nombre max de règle
                     if (invalidInput)
                     {
                         Console.WriteLine("Vous devez entrer un entier entre 1 et " + max);
@@ -333,84 +363,53 @@ namespace Devoir_1
             return false;
         }
 
-        public static void DisplayGrammar(Grammar grammar)
+        public static void DisplayGrammar(Grammar grammar)                                  //  Affichage de chaque règle de la grammaire
         {
             Console.WriteLine("Grammaire importé : " + grammar.fileName + "\n");
 
             foreach (string rule in grammar.rules)
-            {
                 Console.WriteLine(rule);
-            }
         }
 
-        private static readonly int tableWidth = 60;
+        
 
-        static void PrintLine()
-        {
-            Console.WriteLine(new string('-', tableWidth));
-        }
-
-        static void PrintRow(params string[] columns)
-        {
-            int width = (tableWidth - columns.Length) / columns.Length;
-            string row = "|";
-
-            foreach (string column in columns)
-            {
-                row += AlignCentre(column, width) + "|";
-            }
-
-            Console.WriteLine(row);
-        }
-
-        static string AlignCentre(string text, int width)
-        {
-            text = text.Length > width ? text.Substring(0, width - 3) + "..." : text;
-
-            if (string.IsNullOrEmpty(text))
-            {
-                return new string(' ', width);
-            }
-            else
-            {
-                return text.PadRight(width - (width - text.Length) / 2).PadLeft(width);
-            }
-        }
+        
 
         public static void DisplayNodes(List<Node> nodes)
         {
-            PrintLine();
-            PrintRow("Etats", "Terminal 0", "Terminal 1");
-            PrintLine();
+            ConsoleTable cT = new ConsoleTable(60);                                         // Création de la table de console
+            cT.PrintLine();                                                                        
+            cT.PrintRow("Etats", "Terminal 0", "Terminal 1");                               // en-tête
+            cT.PrintLine();
 
             string terminal0, terminal1, finalNodes = "";
 
-            foreach(Node node in nodes)
+            foreach(Node node in nodes)                                                     //  Pour chaque noeud
             {
-                if (node.isFinal)
+                if (node.isFinal)                                                           //  Si noeud est final
                     finalNodes += node.letter;
                 if(node.letter != 'Z')
                 {
                     terminal0 = "";
                     terminal1 = "";
 
-                    foreach(Link link in node.links)
+                    foreach(Link link in node.links)                                        //  Pour chaque lien du noeud
                     {
-                        if (link.terminal.Equals('0'))
-                            terminal0 += link.to;
+                        if (link.terminal.Equals('0'))                                          //  Si le terminal du lien est 0
+                            terminal0 += link.nextNode.letter;
                         else
-                            terminal1 += link.to;
+                            terminal1 += link.nextNode.letter;                                  //  Sinon
                     }
 
-                    terminal0 = string.Join<char>(",", terminal0);
+                    terminal0 = string.Join<char>(",", terminal0);                              //  Ajout de virgure entre chaque lettre de noeud
                     terminal1 = string.Join<char>(",", terminal1);
 
-                    PrintRow(node.letter.ToString(), terminal0, terminal1);
+                    cT.PrintRow(node.letter.ToString(), terminal0, terminal1);                  //  Impression de la rangée dans la table
                 }
             }
-            PrintLine();
+            cT.PrintLine();
 
-            Console.WriteLine("Les noeuds finaux sont : " + string.Join<char>(",", finalNodes));
+            Console.WriteLine("Les noeuds finaux sont : " + string.Join<char>(",", finalNodes));    //  Affichage des noeuds finaux
 
         }
     }

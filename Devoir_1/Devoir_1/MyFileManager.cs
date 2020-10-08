@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Devoir_1
 {
@@ -14,17 +12,15 @@ namespace Devoir_1
         }
         public static bool FileExists(string path)
         {
-            return File.Exists(path);
+            return File.Exists(path);                                           //  Si le fichier existe
         }
 
-        public static void WriteGrammarInFile(Grammar grammar, List<string> addedRules = null)
+        public static void WriteGrammarInFile(Grammar grammar, List<string> addedRules = null)      //  Création de la grammaire ou ajout de règle à la grammaire
         {
             StreamWriter sw = new StreamWriter(grammar.path, addedRules != null);
 
             if (addedRules!=null)
-            {
                 sw.WriteLine();
-            }
 
             int i = 0;
             foreach (string rule in grammar.rules)                                          //  Boucle dans chaque règle
@@ -39,7 +35,7 @@ namespace Devoir_1
             sw.Close();
         }
 
-        public static List<string> ReadRulesFromFile(string path)
+        public static List<string> ReadRulesFromFile(string path)                           //  Lecture de la grammaire du fichier
         {
             StreamReader sr = new StreamReader(path);
 
@@ -50,7 +46,7 @@ namespace Devoir_1
             return rules;
         }
 
-        public static void DeleteFile(string path)
+        public static void DeleteFile(string path)                                          //  Suppression du fichier
         {
             File.Delete(path);
         }
