@@ -10,7 +10,8 @@ namespace Devoir_1
         {
             this.tableWidth = tableWidth;
         }
-
+        //Référence sur le site suivant: https://stackoverflow.com/questions/856845/how-to-best-way-to-draw-table-in-console-app-c
+        //Ces fonctions nous permettent d'avoir un tableau plus beau visuellement.
         public void PrintLine()
         {
             Console.WriteLine(new string('-', tableWidth));
