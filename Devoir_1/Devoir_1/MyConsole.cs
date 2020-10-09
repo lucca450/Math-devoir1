@@ -72,6 +72,14 @@ namespace Devoir_1
         public static void DisplayWorkingPaths(int nbWorkingPaths, string terminals)    //  Affichage des résultats des terminaux selon la grammaire
         {
             Console.WriteLine(string.Format("Les terminaux {0} ont généré {1} chemin(s) valide(s) !", terminals, nbWorkingPaths));
+            if (nbWorkingPaths == 0)
+            {
+                Console.WriteLine(string.Format("L'expression entrée n'est PAS VALIDE."));
+            }
+            else if(nbWorkingPaths > 0)
+            {
+                Console.WriteLine(string.Format("L'expression entrée est VALIDE."));
+            }
         }
 
         public static string AskTerminalInput()
