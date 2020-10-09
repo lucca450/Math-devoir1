@@ -101,7 +101,7 @@ namespace Devoir_1
                     ok = true;
 
                 if (!ok)
-                    Console.Write("Ce n'est pas valide. Entrer la liste des terminaux (1 ou 0): ");
+                    Console.Write("Ce n'est pas valide. Entrer la liste des terminaux (1 ou 0. Faites la touche «enter» pour le vide.): ");
             }
 
             return terminals;                                              // Retourne les terminaux
