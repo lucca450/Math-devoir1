@@ -38,7 +38,7 @@ namespace Devoir_1
             {
                 Console.Clear();                                                        //  Clear de la console
 
-                if (!fileName.Equals(""))
+                if (fileName != null && fileName != "")
                     Console.WriteLine("Grammaire importée : " + fileName + "\n");
                 else
                     Console.WriteLine("Aucune grammaire importée");
@@ -132,10 +132,10 @@ namespace Devoir_1
             bool validRule = false;
             while (!validRule)
             {
-                Console.WriteLine("Entrez une règle à la grammaire. Respectez le format suivant: S->e OU X->1 OU X->1X");
+                Console.WriteLine("Entrez une règle à la grammaire. Respectez le format suivant: S->e OU X->1 OU X->1X  *Les lettres de A à Y sont acceptées.*");
                 rule = Console.ReadLine().Trim();                                                                               //  Entrée de la règle
 
-                if (Regex.IsMatch(rule, "^(?:[A-Z]->[0-1]{1}[A-Z]{1}|[A-Z]->[0-1]{1}|S->e)"))                                       // Si le format convient 
+                if (Regex.IsMatch(rule, "^(?:[A-Y]->[0-1]{1}[A-Y]{1}|[A-Y]->[0-1]{1}|S->e)"))                                       // Si le format convient 
                 {
                     if (!grammar.rules.Contains(rule))                                                                              //  
                     {
@@ -146,7 +146,7 @@ namespace Devoir_1
                 }
                 else
                 {
-                    Console.WriteLine("La règle n'est pas valide. Respectez le format suivant: S->e OU X->1 OU X->1X");
+                    Console.WriteLine("La règle n'est pas valide. Respectez le format suivant: S->e OU X->1 OU X->1X *Les lettres de A à Y sont acceptées.*");
                 }
             }
 
@@ -193,14 +193,14 @@ namespace Devoir_1
 
         public static void Error()
         {
-            Console.WriteLine("This Shouldn't be happening !!!");
+            Console.WriteLine("Une erreur est survenue.");
         }
 
         public static List<string> AskRules(Grammar grammar, bool adding = false)               //  Demande de règles
         {
             Console.WriteLine("Sachez que :\n" +
                 "- S est le symbole de départ\n" +
-                "- V=(S,A,B,C,D,...)\n" +
+                "- V=(S,A,B,C,D,...,Y)\n" +
                 "- T=(0,1)\n" +
                 "- R sont les regles");
 

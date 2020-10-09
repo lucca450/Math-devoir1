@@ -97,7 +97,7 @@ namespace Devoir_1
         /*
             Fonction récurcive
             À chaque fois qu'elle trouve un lien avec le bon terminal, elle suit le lien en rappelant la fonction avec le prochain noeud et en incrémentant l'index du terminal où on est rendu
-            Si elle trouve un noeud final et qu'il n'y a pas d'autre terminal, elle incrémente le nombre de chemin possible
+            Si elle trouve un noeud final et qu'il n'y a pas d'autre terminal, elle incrémente le nombre de chemins possible
             sinon, elle revient d'un noeud et essaye un autre lien, ainsi de suite.
          */
         private void CheckNode(Node nodeToCheck, string terminals, int idx)                 

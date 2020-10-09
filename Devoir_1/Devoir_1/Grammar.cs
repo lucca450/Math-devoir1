@@ -195,7 +195,6 @@ namespace Devoir_1
                         done = true;
                         break;
                     case "3":                                                               // Si 3 : Affichage de la grammaire
-                        MyConsole.DisplayGrammar(this);
                         break;
                     case "4":                                                               // Si 4 : Quitter
                         done = true;
